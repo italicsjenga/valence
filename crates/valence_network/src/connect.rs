@@ -95,10 +95,10 @@ async fn handle_connection(shared: SharedNetworkState, stream: TcpStream, remote
     }
 }
 
-struct HandshakeData {
-    protocol_version: i32,
-    server_address: String,
-    next_state: HandshakeNextState,
+pub struct HandshakeData {
+    pub protocol_version: i32,
+    pub server_address: String,
+    pub next_state: HandshakeNextState,
 }
 
 async fn handle_handshake(

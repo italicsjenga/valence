@@ -19,7 +19,7 @@ use valence_core::protocol::{Decode, Encode, Packet};
 use crate::byte_channel::{byte_channel, ByteSender, TrySendError};
 use crate::{CleanupOnDrop, NewClientInfo};
 
-pub(crate) struct PacketIo {
+pub struct PacketIo {
     stream: TcpStream,
     enc: PacketEncoder,
     dec: PacketDecoder,
@@ -30,7 +30,7 @@ pub(crate) struct PacketIo {
 const READ_BUF_SIZE: usize = 4096;
 
 impl PacketIo {
-    pub(crate) fn new(
+    pub fn new(
         stream: TcpStream,
         enc: PacketEncoder,
         dec: PacketDecoder,
@@ -48,7 +48,7 @@ impl PacketIo {
         }
     }
 
-    pub(crate) async fn send_packet<P>(&mut self, pkt: &P) -> anyhow::Result<()>
+    pub async fn send_packet<P>(&mut self, pkt: &P) -> anyhow::Result<()>
     where
         P: Packet + Encode,
     {
@@ -58,7 +58,7 @@ impl PacketIo {
         Ok(())
     }
 
-    pub(crate) async fn recv_packet<'a, P>(&'a mut self) -> anyhow::Result<P>
+    pub async fn recv_packet<'a, P>(&'a mut self) -> anyhow::Result<P>
     where
         P: Packet + Decode<'a>,
     {
@@ -86,12 +86,12 @@ impl PacketIo {
     }
 
     #[allow(dead_code)]
-    pub(crate) fn set_compression(&mut self, threshold: Option<u32>) {
+    pub fn set_compression(&mut self, threshold: Option<u32>) {
         self.enc.set_compression(threshold);
         self.dec.set_compression(threshold);
     }
 
-    pub(crate) fn enable_encryption(&mut self, key: &[u8; 16]) {
+    pub fn enable_encryption(&mut self, key: &[u8; 16]) {
         self.enc.enable_encryption(key);
         self.dec.enable_encryption(key);
     }

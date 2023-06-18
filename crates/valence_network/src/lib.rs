@@ -19,8 +19,9 @@
 
 mod byte_channel;
 mod connect;
+pub use connect::HandshakeData;
 pub mod packet;
-mod packet_io;
+pub mod packet_io;
 
 use std::net::{IpAddr, Ipv4Addr, SocketAddr, SocketAddrV4};
 use std::sync::atomic::{AtomicUsize, Ordering};
